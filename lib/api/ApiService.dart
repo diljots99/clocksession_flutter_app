@@ -6,7 +6,7 @@ import 'dart:convert';
 class ApiService {
   final String _base_url = "";
 
-  Future<User> login(LoginRequest body) async {
+  Future<dynamic> login(LoginRequest body) async {
     final response = await http.post(
         Uri.parse('http://devl-api.clocksession.com/api/Account/login'),
         headers: <String, String>{
@@ -26,7 +26,8 @@ class ApiService {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      dynamic errorBody = jsonDecode(response.body);
+      return errorBody;
     }
   }
 }
